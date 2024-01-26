@@ -16,7 +16,8 @@ if(argv.length <= 2){
         const StorageTest2 = new Storage("storageDesign-device","none");
         StorageTest2.parse();
     }else if(argv[2] == "--createKey"){
-        
+        const StorageTest = new Storage("storageDesign","none");
+        console.log(StorageTest.createKey("kx.s1","idk"));
     }
 }
 

@@ -17,9 +17,9 @@ export class Storage {
     encrypt(data: string, key: string = ""): string {
         let encrypted: string = "";
         if(key == ""){
-            this.cryptoAES.encrypt(data, this.AESKEY);
+            encrypted = this.cryptoAES.encrypt(data, this.AESKEY).toString();
         }else{
-            this.cryptoAES.encrypt(data, key);
+            encrypted = this.cryptoAES.encrypt(data, key).toString();
         }
        
         return encrypted.toString();
@@ -100,7 +100,8 @@ $%${actionIdentifer}$`
             console.log("Done!")
     }
     createKey(accesses: any,keight: any): string{
-        return this.encrypt(`ACCESS_KEY::${this.encrypt(JSON.stringify({"accesses": accesses}),"")}`);
+        return this.encrypt(`ACCESS_KEY::${this.encrypt(JSON.stringify({"accesses": accesses}),keight)}`,keight);
+        
     }
     tester(): void {
         
