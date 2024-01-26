@@ -14,8 +14,14 @@ export class Storage {
         this.keyModes = {};
     }
 
-    encrypt(data: string): string {
-        const encrypted = this.cryptoAES.encrypt(data, this.AESKEY);
+    encrypt(data: string, key: string = ""): string {
+        let encrypted: string = "";
+        if(key == ""){
+            this.cryptoAES.encrypt(data, this.AESKEY);
+        }else{
+            this.cryptoAES.encrypt(data, key);
+        }
+       
         return encrypted.toString();
     }
 
@@ -39,17 +45,19 @@ export class Storage {
                 let splitdt = encrData.split("\n")[0];
             
                 let actionIdentifer = splitdt.split("$@")[1].split("$")[0];
-              /**  console.log(`
+                /**
+                console.log(`
                     SPLITDT: ${splitdt};
                     ActionIdentifier: ${actionIdentifer};
                 `)
-            */
+                **/
             
                 let actSplit1 = encrData.split(`$%${actionIdentifer}$`)[0].split(`$@${actionIdentifer}$`)[1].replace("\n","");
                 let actSplit = this.decrypt(actSplit1);
+                
                 let keyModes = this.keyModes;
                 //console.log(actSplit)
-                console.log(this.decrypt(actSplit1))
+                //console.log(this.decrypt(actSplit1))
                 xml2js.parseString(actSplit, function (err, result) {
                 
                     let mainDoc = result["x"];
@@ -81,16 +89,19 @@ export class Storage {
         let splitData = encrData.split("");
         let splitsD = encrData.split("\n");
         let splitdt = encrData.split("\n")[0];
+        //console.log(encrData)
         let actionIdentifer = splitdt.split("$@")[1].split("$")[0];
         let actSplit = encrData.split(`$%${actionIdentifer}$`)[0].split(`$@${actionIdentifer}$`)[1].replace("\n","");
         let fixedAct = this.encrypt(actSplit);
-        fs.writeFileSync(this.fileName,`$@${actionIdentifer}$
+        fs.writeFileSync(this.fileName+'-device',`$@${actionIdentifer}$
 ${fixedAct}
 $%${actionIdentifer}$`
             );
             console.log("Done!")
     }
-
+    createKey(accesses: any,keight: any): string{
+        return this.encrypt(`ACCESS_KEY::${this.encrypt(JSON.stringify({"accesses": accesses}),"")}`);
+    }
     tester(): void {
         
     }
