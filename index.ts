@@ -1,23 +1,18 @@
+/**
+ * @author Leviathenn
+ */
+import * as fs from "fs";
 import { argv } from "bun";
-import { Storage } from "./lib/storage";
+import { Info } from "./lib/Info";
+import { xmlEnv } from "./lib/xmlEnv";
 
 if(argv.length <= 2){
 
-    const StorageTest = new Storage("storageDesign-device","none");
-    StorageTest.parse();
+    const MainParser = new Info("storageDevice","none");
+    MainParser.parse();
+    const envParser = new xmlEnv(fs.readFileSync("storageDevice/env.xml").toString());
+    envParser.parse();
 }else{
-    if(argv[2] == "--encrypt"){
-        const StorageTest = new Storage("storageDesign","none");
-        StorageTest.encryptF();
-    }
-    if(argv[2] == "--encryptRun"){
-        const StorageTest = new Storage("storageDesign","none");
-        StorageTest.encryptF();
-        const StorageTest2 = new Storage("storageDesign-device","none");
-        StorageTest2.parse();
-    }else if(argv[2] == "--createKey"){
-        const StorageTest = new Storage("storageDesign","none");
-        console.log(StorageTest.createKey("kx.s1","idk"));
-    }
+   
 }
 

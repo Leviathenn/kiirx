@@ -1,8 +1,8 @@
 <x>
     <user>
-        <userKey passKey="true">
-            <passKey>LEVIATHAN:SSH_PASSWORD</passKey>
-            <key>LEVIATHAN:PUB_KEY</key>
+        <userKey downloadable="true">
+            <passKey>$USER:SSH_PASSWORD</passKey>
+            <key>$USER:PUB_KEY</key>
         </userKey>
     </user>
 </x>
