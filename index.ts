@@ -12,6 +12,7 @@ if(argv.length <= 2){
     MainParser.parse();
     const envParser = new xmlEnv(fs.readFileSync("storageDevice/env.xml").toString());
     envParser.parse();
+    
 }else{
    
 }
